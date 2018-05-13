@@ -40,13 +40,14 @@
 				cy,name = "cyttsp5_core";
 				cy,irq_gpio = <&msm_gpio 13 0x2008>;
 				cy,rst_gpio = <&msm_gpio 12 0x00>;
+				cy,level_irq_udelay = <1>;
 				cy,hid_desc_register = <1>;
 				/* CY_CORE_FLAG_WAKE_ON_GESTURE | CY_CORE_FLAG_RESTORE_PARAMETERS */
 				cy,flags = <0x05>;
 				/* CY_CORE_EWG_NONE */
 				cy,easy_wakeup_gesture = <0>;
 				cy,btn_keys = <139	/* KEY_MENU */
-				          102 /* KEY_HOMEPAGE */
+				          172 /* KEY_HOMEPAGE */
 					       158>;	/* KEY_BACK */
 				cy,btn_keys-tag = <0>;
 

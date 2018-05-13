@@ -30,7 +30,7 @@
 #define VFE40_STATS_BURST_LEN 1
 #define VFE40_STATS_BURST_LEN_8916_VERSION 2
 #define VFE40_UB_SIZE 1536 /* 1536 * 128 bits = 24KB */
-#ifdef CONFIG_MACH_NX512J
+#ifdef CONFIG_MACH_NX511J
 #define VFE40_UB_SIZE_8916 3072 /* 2048 * 128 bits = 32KB  change by congshan qcom patch*/
 #else
 #define VFE40_UB_SIZE_8916 2048 /* 2048 * 128 bits = 32KB */

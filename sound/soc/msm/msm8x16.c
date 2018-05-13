@@ -464,7 +464,7 @@ void schedule_delay_pa_on(void)
 {
 	pr_debug("%s: Enter\n",__func__);
 	if(external_pa_control == EXTERNAL_PA_ON) {
-		if(schedule_delayed_work(&external_pa_work,msecs_to_jiffies(1))==0) {
+		if(schedule_delayed_work(&external_pa_work,msecs_to_jiffies(60))==0) {
 			printk("there is already a work scheduled\n");//60 as default
 		}
 	}
@@ -1939,16 +1939,16 @@ static void *def_msm8x16_wcd_mbhc_cal(void)
 	 * 360-680 == Button 3
 	 */
 #ifdef CONFIG_FEATURE_ZTEMT_AUDIO_EXT_PA
-	btn_low[0] = 300;
-	btn_high[0] = 500;
-	btn_low[1] = 300;
-	btn_high[1] = 500;
-	btn_low[2] = 300;
-	btn_high[2] = 500;
-	btn_low[3] = 300;
-	btn_high[3] = 500;
-	btn_low[4] = 300;
-	btn_high[4] = 500;
+	btn_low[0] = 112;
+	btn_high[0] = 100;
+	btn_low[1] = 275;
+	btn_high[1] = 250;
+	btn_low[2] = 430;
+	btn_high[2] = 430;
+	btn_low[3] = 430;
+	btn_high[3] = 430;
+	btn_low[4] = 430;
+	btn_high[4] = 430;
 #else
 	btn_low[0] = 75;
 	btn_high[0] = 75;
@@ -3117,9 +3117,8 @@ static void msm8x16_dt_parse_cap_info(struct platform_device *pdev,
 
 int get_cdc_gpio_lines(struct pinctrl *pinctrl, int ext_pa)
 {
-	int ret;
 	pr_debug("%s\n", __func__);
-	switch (ext_pa) {
+	switch (ext_pa & SEC_MI2S_ID) {
 	case SEC_MI2S_ID:
 		pinctrl_info.cdc_lines_sus = pinctrl_lookup_state(pinctrl,
 			"cdc_lines_sec_ext_sus");
@@ -3135,26 +3134,6 @@ int get_cdc_gpio_lines(struct pinctrl *pinctrl, int ext_pa)
 								__func__);
 			return -EINVAL;
 		}
-		break;
-	case QUAT_MI2S_ID:
-		pinctrl_info.cdc_lines_sus = pinctrl_lookup_state(pinctrl,
-			"cdc_lines_quat_ext_sus");
-		if (IS_ERR(pinctrl_info.cdc_lines_sus)) {
-			pr_err("%s: Unable to get pinctrl disable state handle\n",
-								__func__);
-			return -EINVAL;
-		}
-		pinctrl_info.cdc_lines_act = pinctrl_lookup_state(pinctrl,
-			"cdc_lines_quat_ext_act");
-		if (IS_ERR(pinctrl_info.cdc_lines_act)) {
-			pr_err("%s: Unable to get pinctrl disable state handle\n",
-								__func__);
-			return -EINVAL;
-		}
-		ret = pinctrl_select_state(pinctrl_info.pinctrl,
-					pinctrl_info.cdc_lines_act);
-		if (ret < 0)
-			pr_err("failed to enable codec gpios\n");
 		break;
 	default:
 		pinctrl_info.cdc_lines_sus = pinctrl_lookup_state(pinctrl,
@@ -3480,7 +3459,7 @@ static int msm8x16_asoc_machine_probe(struct platform_device *pdev)
 	ret = of_property_read_u32(pdev->dev.of_node, mclk, &id);
 	if (ret) {
 		dev_err(&pdev->dev,
-			"%s: missing %s in dt node\n", __func__, mclk);
+			"%s: missing %s in dt node\n", __func__, card_dev_id);
 		id = DEFAULT_MCLK_RATE;
 	}
 	pdata->mclk_freq = id;

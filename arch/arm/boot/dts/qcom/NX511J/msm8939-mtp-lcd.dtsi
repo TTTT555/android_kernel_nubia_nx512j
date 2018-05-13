@@ -9,9 +9,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-#include "zte-dsi-panel-sharp-r63417-1080p-5p5-cmd.dtsi"
-#include "zte-dsi-panel-sharp-r63417-1080p-5p5-video.dtsi"
+ 
+#include "nubia-dsi-sharp-panel-nt35595-1080p-5p0-video.dtsi"
+#include "nubia-dsi-sharp-panel-nt35595-1080p-5p0-command.dtsi"
+
 #include "msm8939-lcd-pinctrl.dtsi"
+
+&i2c_3 {
+	status = "ok";
+};
 
 &soc {
 	i2c@78b7000 { /* BLSP1 QUP3 */
@@ -22,8 +28,8 @@
 			vcc_i2c-supply = <&pm8916_l5>;
 			pinctrl-0 = <&vsp_en_gpio_active &vsn_en_gpio_active>;
 			pinctrl-1 = <&vsp_en_gpio_suspend &vsn_en_gpio_suspend>;
-			vsp-en-gpio    = <&msm_gpio 97 0x00>;
-			vsn-en-gpio    = <&msm_gpio 98 0x00>;
+			vsp-en-gpio = <&msm_gpio 97 0x00>;
+			vsn-en-gpio = <&msm_gpio 98 0x00>;
 		};
 	};
 };
@@ -33,21 +39,24 @@
 	qcom,mdss-pref-prim-intf = "dsi";
 };
 
-&dsi_sharp_r63417_1080p_5p5_video_vid {
-	qcom,mdss-dsi-lp11-init;
-	qcom,rst-gpio-before-avdd-off;
+&dsi_sharp_nt35595_1080_5p0_vid {
+	qcom,mdss-dsi-bl-pmic-pwm-frequency = <100>;
+	qcom,mdss-dsi-bl-pmic-bank-select = <0>;
+	qcom,mdss-dsi-pwm-gpio = <&pm8916_mpps 4 0>;
 	qcom,cont-splash-enabled;
-    qcom,avdd-enabled;
-    qcom,avdd-vsp-voltage = <5000>;
-    qcom,avdd-vsn-voltage = <5000>;
-    qcom,avdd-vsp-vsn-delay = <10>;
-    qcom,befor-panel-on-cmd-delay = <10>;
-	qcom,befor-avdd-off-delay = <10>;
-	qcom,18-to-55-delay = <10>;
-	qcom,rst-gpio-before-avdd-off;
-	qcom,disable-dimming-when-suspend;
+	qcom,avdd-enabled;
+	qcom,avdd-vsp-voltage = <5500>;
+	qcom,avdd-vsn-voltage = <5500>;
+	qcom,avdd-vsp-vsn-delay = <10>;
+	qcom,befor-panel-on-cmd-delay = <10>;
 
-    //LP11
+	//Dimming control
+	qcom,disable-dimming-when-suspend;
+	qcom,disable-dimming-when-resume;
+
+	//LP11
+	qcom,mdss-dsi-lp11-init;
+	qcom,mdss-dsi-init-delay-us = <20000>;
 	//qcom,mdss-dsi-hfp-power-mode;
 	//qcom,mdss-dsi-hsa-power-mode;
 	//qcom,mdss-dsi-hbp-power-mode;
@@ -60,22 +69,25 @@
 	//qcom,mdss-dsi-panel-status-check-mode = "reg_read_zte";
 };
 
-&dsi_sharp_r63417_1080p_5p5_cmd_vid {
-	qcom,mdss-dsi-lp11-init;
-	qcom,rst-gpio-before-avdd-off;
+&dsi_sharp_nt35595_1080_5p0_cmd {
+	qcom,mdss-dsi-bl-pmic-pwm-frequency = <100>;
+	qcom,mdss-dsi-bl-pmic-bank-select = <0>;
+	qcom,mdss-dsi-pwm-gpio = <&pm8916_mpps 4 0>;
 	qcom,cont-splash-enabled;
 	qcom,mdss-dsi-panel-clockrate = <933000000>;
-    qcom,avdd-enabled;
-    qcom,avdd-vsp-voltage = <5000>;
-    qcom,avdd-vsn-voltage = <5000>;
-    qcom,avdd-vsp-vsn-delay = <10>;
-    qcom,befor-panel-on-cmd-delay = <10>;
-	qcom,befor-avdd-off-delay = <10>;
-	qcom,18-to-55-delay = <10>;
-	qcom,rst-gpio-before-avdd-off;
-	qcom,disable-dimming-when-suspend;
+	qcom,avdd-enabled;
+	qcom,avdd-vsp-voltage = <5500>;
+	qcom,avdd-vsn-voltage = <5500>;
+	qcom,avdd-vsp-vsn-delay = <10>;
+	qcom,befor-panel-on-cmd-delay = <10>;
 
-    //LP11
+	//Dimming control
+	qcom,disable-dimming-when-suspend;
+	qcom,disable-dimming-when-resume;
+
+	//LP11
+	qcom,mdss-dsi-lp11-init;
+	qcom,mdss-dsi-init-delay-us = <20000>;
 	//qcom,mdss-dsi-hfp-power-mode;
 	//qcom,mdss-dsi-hsa-power-mode;
 	//qcom,mdss-dsi-hbp-power-mode;
@@ -115,8 +127,7 @@
 	qcom,platform-reset-gpio = <&msm_gpio 25 0>;
 	qcom,platform-bklight-en-gpio = <&msm_gpio 98 0>;
 */
-
-	qcom,dsi-pref-prim-pan = <&dsi_sharp_r63417_1080p_5p5_cmd_vid>;
+	qcom,dsi-pref-prim-pan = <&dsi_sharp_nt35595_1080_5p0_cmd>;
 	pinctrl-names = "mdss_default", "mdss_sleep";
 	pinctrl-0 = <&mdss_te_active &mdss_te_check_active>;
 	pinctrl-1 = <&mdss_te_suspend &mdss_te_check_suspend>;
