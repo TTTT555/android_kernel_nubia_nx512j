@@ -1,5 +1,18 @@
 /*
  * Definitions for akm09911 compass chip.
+ *
+ * Copyright (C) 2013-2014 HTC Corporation.
+ * Author: Hou-Kun Chen <houkun.chen@gmail.com>
+ *
+ * This software is licensed under the terms of the GNU General Public
+ * License version 2, as published by the Free Software Foundation, and
+ * may be copied, distributed, and modified under those terms.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
  */
 #ifndef AKM09911_H
 #define AKM09911_H
@@ -105,26 +118,26 @@
 #define AKM_I2C_NAME			"akm09911"
 #define AKM_MISCDEV_NAME		"akm09911_dev"
 #define AKM_SYSCLS_NAME			"compass"
-#define AKM_SYSDEV_NAME			"akm09911"
+#define AKM_SYSDEV_NAME			"compass"
 #define AKM_REG_MODE			AK09911_REG_CNTL2
 #define AKM_REG_RESET			AK09911_REG_CNTL3
 #define AKM_REG_STATUS			AK09911_REG_ST1
 #define AKM_MEASURE_TIME_US		10000
 #define AKM_DRDY_IS_HIGH(x)		((x) & 0x01)
 #define AKM_DOR_IS_HIGH(x)		((x) & 0x02)
-#define AKM_SENSOR_INFO_SIZE	2
-#define AKM_SENSOR_CONF_SIZE	3
-#define AKM_SENSOR_DATA_SIZE	9
+#define AKM_SENSOR_INFO_SIZE		2
+#define AKM_SENSOR_CONF_SIZE		3
+#define AKM_SENSOR_DATA_SIZE		9
 
-#define AKM_YPR_DATA_SIZE		16
+#define AKM_YPR_DATA_SIZE		33
 #define AKM_RWBUF_SIZE			16
 #define AKM_REGS_SIZE			AK09911_REGS_SIZE
 #define AKM_REGS_1ST_ADDR		AK09911_REG_WIA1
 #define AKM_FUSE_1ST_ADDR		AK09911_FUSE_ASAX
 
-#define AKM_MODE_SNG_MEASURE	AK09911_MODE_SNG_MEASURE
+#define AKM_MODE_SNG_MEASURE		AK09911_MODE_SNG_MEASURE
 #define AKM_MODE_SELF_TEST		AK09911_MODE_SELF_TEST
-#define AKM_MODE_FUSE_ACCESS	AK09911_MODE_FUSE_ACCESS
+#define AKM_MODE_FUSE_ACCESS		AK09911_MODE_FUSE_ACCESS
 #define AKM_MODE_POWERDOWN		AK09911_MODE_POWERDOWN
 #define AKM_MODE_CONTINUOUS_10HZ	AK09911_MODE_CONTINUOUS_10HZ
 #define AKM_MODE_CONTINUOUS_20HZ	AK09911_MODE_CONTINUOUS_20HZ
@@ -132,31 +145,39 @@
 #define AKM_MODE_CONTINUOUS_100HZ	AK09911_MODE_CONTINUOUS_100HZ
 #define AKM_RESET_DATA			AK09911_RESET_DATA
 
-#define ACC_DATA_FLAG		0
-#define MAG_DATA_FLAG		1
-#define FUSION_DATA_FLAG	2
-#define AKM_NUM_SENSORS		3
+#define ACC_DATA_FLAG			0
+#define MAG_DATA_FLAG			1
+#define MAGUC_DATA_FLAG			2
+#define FUSION_DATA_FLAG		3
+#define ORI_DATA_FLAG			4
+#define UNCALI_MAG_DATA_FLAG		5
+#define GEO_MAG_DATA_FLAG		6
+#define AKM_NUM_SENSORS			7
 
-#define ACC_DATA_READY		(1<<(ACC_DATA_FLAG))
-#define MAG_DATA_READY		(1<<(MAG_DATA_FLAG))
-#define FUSION_DATA_READY	(1<<(FUSION_DATA_FLAG))
+#define ACC_DATA_READY			(1 << (ACC_DATA_FLAG))
+#define MAG_DATA_READY			(1 << (MAG_DATA_FLAG))
+#define MAGUC_DATA_READY            (1 << (MAGUC_DATA_FLAG))
+#define FUSION_DATA_READY		(1 << (FUSION_DATA_FLAG))
+#define ORI_DATA_READY			(1 << (ORI_DATA_FLAG))
+#define UNCALI_MAG_DATA_READY		(1 << (UNCALI_MAG_DATA_FLAG))
+#define GEO_MAG_DATA_READY		(1 << (GEO_MAG_DATA_FLAG))
 
 #define AKMIO				0xA1
 
 /* IOCTLs for AKM library */
-#define ECS_IOCTL_READ				_IOWR(AKMIO, 0x01, char)
-#define ECS_IOCTL_WRITE				_IOW(AKMIO, 0x02, char)
-#define ECS_IOCTL_RESET				_IO(AKMIO, 0x03)
-#define ECS_IOCTL_SET_MODE			_IOW(AKMIO, 0x10, char)
-#define ECS_IOCTL_SET_YPR			_IOW(AKMIO, 0x11, int[AKM_YPR_DATA_SIZE])
-#define ECS_IOCTL_GET_INFO			_IOR(AKMIO, 0x20, unsigned char[AKM_SENSOR_INFO_SIZE])
-#define ECS_IOCTL_GET_CONF			_IOR(AKMIO, 0x21, unsigned char[AKM_SENSOR_CONF_SIZE])
-#define ECS_IOCTL_GET_DATA			_IOR(AKMIO, 0x22, unsigned char[AKM_SENSOR_DATA_SIZE])
+#define ECS_IOCTL_READ			_IOWR(AKMIO, 0x01, char)
+#define ECS_IOCTL_WRITE			_IOW(AKMIO, 0x02, char)
+#define ECS_IOCTL_RESET			_IO(AKMIO, 0x03)
+#define ECS_IOCTL_SET_MODE		_IOW(AKMIO, 0x10, char)
+#define ECS_IOCTL_SET_YPR		_IOW(AKMIO, 0x11, int[AKM_YPR_DATA_SIZE])
+#define ECS_IOCTL_GET_INFO		_IOR(AKMIO, 0x20, unsigned char[AKM_SENSOR_INFO_SIZE])
+#define ECS_IOCTL_GET_CONF		_IOR(AKMIO, 0x21, unsigned char[AKM_SENSOR_CONF_SIZE])
+#define ECS_IOCTL_GET_DATA		_IOR(AKMIO, 0x22, unsigned char[AKM_SENSOR_DATA_SIZE])
 #define ECS_IOCTL_GET_OPEN_STATUS	_IOR(AKMIO, 0x23, int)
 #define ECS_IOCTL_GET_CLOSE_STATUS	_IOR(AKMIO, 0x24, int)
-#define ECS_IOCTL_GET_DELAY			_IOR(AKMIO, 0x25, long long int)
+#define ECS_IOCTL_GET_DELAY		_IOR(AKMIO, 0x25, long long int)
 #define ECS_IOCTL_GET_LAYOUT		_IOR(AKMIO, 0x26, char)
-#define ECS_IOCTL_GET_ACCEL			_IOR(AKMIO, 0x30, short[3])
+#define ECS_IOCTL_GET_ACCEL		_IOR(AKMIO, 0x30, short[3])
 
 struct akm09911_platform_data {
 	char layout;
