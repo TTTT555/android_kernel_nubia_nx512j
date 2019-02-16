@@ -79,7 +79,7 @@ dtb-$(CONFIG_ARCH_MSM8909) += msm8909-sim.dtb \
 	apq8009-mtp-wcd9326-refboard.dtb \
 	apq8009-512mb-mtp-wcd9326-refboard.dtb
 ifeq ($(CONFIG_MACH_NUBIA_MSM8939),y)
-dtb-$(CONFIG_ARCH_MSM8916) += msm8939-NX511J.dtb
+dtb-$(CONFIG_ARCH_MSM8916) += msm8939-NX512J.dtb
 else	
 dtb-$(CONFIG_ARCH_MSM8916) += msm8916-cdp.dtb \
 	msm8916-cdp-smb1360.dtb \

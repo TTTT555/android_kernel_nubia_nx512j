@@ -43,7 +43,7 @@
 
 &soc {
 	/delete-node/ serial@78af000;
-	// add i2c qup3 (gpio10 gpio11) nx511j add
+	// add i2c qup3 (gpio10 gpio11) nx512j add
 		i2c_3: i2c@78b7000 { /* BLSP1 QUP3 */
 			compatible = "qcom,i2c-msm-v2";
 			#address-cells = <1>;

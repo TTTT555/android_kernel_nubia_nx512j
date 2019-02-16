@@ -1,7 +1,7 @@
 /*
  * BQ27520 battery driver
  *
- * Copyright (C) 2013Â¡rwangshuai <wang.shuai12@zte.com.cn>
+ * Copyright (C) 2013¡rwangshuai <wang.shuai12@zte.com.cn>
  *
  * This package is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -46,7 +46,7 @@
 #include "bqfs_cmd_type.h"
 
 #include "bq27520_bqfs_image.h"
-#include "bq27520_bqfs_image_nx511_atl.h"
+#include "bq27520_bqfs_image_nx512_atl.h"
 #endif 
 
 //NUBIA_BATT
@@ -1602,9 +1602,9 @@ static int bq27520_update_bqfs(struct bq27520_chip *chip)
 	pr_info("start check update, battery_id=%d kohm, batt_type=%s\n",battery_id,chip->battery_type);
 
 	if(!strcmp(chip->battery_type, "ATL")){
-		chip->bqfs_version = BQFS_VERSION_NX511_ATL;
-		chip->bqfs_image = bqfs_image_nx511_atl;
-		chip->bqfs_image_size = ARRAY_SIZE(bqfs_image_nx511_atl);
+		chip->bqfs_version = BQFS_VERSION_NX512_ATL;
+		chip->bqfs_image = bqfs_image_nx512_atl;
+		chip->bqfs_image_size = ARRAY_SIZE(bqfs_image_nx512_atl);
 	}else{
 		chip->bqfs_version = BQFS_VERSION_SAM;
 		chip->bqfs_image = bqfs_image_samsung;

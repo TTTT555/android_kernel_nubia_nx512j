@@ -16,21 +16,6 @@
 		reg = <0x1000000 0x300000>;
 		interrupts = <0 208 0>;
 		
-		cross-conn-det {
-			qcom,pins = <&gp 50>;
-			qcom,num-grp-pins = <1>;
-			qcom,pin-func = <0>;
-			label = "cross-conn-det-sw";
-			cross_conn_det_act: lines_on {
-				drive-strength = <8>;
-				output-low;
-				bias-pull-down;
-			};
-			cross_conn_det_sus: lines_off {
-				drive-strength = <2>;
-				bias-disable;
-			};
-		};
 		ext-pa-ctrl {
 			qcom,pins = <&gp 116>;
 			qcom,num-grp-pins = <1>;

@@ -22,9 +22,9 @@
         vdd-supply = <&pm8916_l17>;
         vio-supply = <&pm8916_l6>;
         rot-matrix = /bits/ 16
-            <(1) (0) (0)
-             (0) (1) (0)
-             (0) (0) (1)>;
+            <(0) (-1) (0)
+             (-1) (0) (0)
+             (0) (0) (-1)>;
         g-poll-interval = <100>;
         g-min-interval = <2>;
         g-fs-range = <0>;
@@ -63,7 +63,7 @@
 			pinctrl-1 = <&akm_sleep>;
 			vdd-supply = <&pm8916_l17>;
 			vio-supply = <&pm8916_l6>;
-			akm,layout = <0x7>;
+			akm,layout = <0x6>;
 			akm,gpio_rstn = <&msm_gpio 69 0x0>;
 			akm,auto-report;
 			akm,use-hrtimer;
